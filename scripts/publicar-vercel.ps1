@@ -28,7 +28,7 @@ if (Test-Path '.vercel\project.json') {
 }
 
 function Add-Env($name, $value) {
-    foreach ($target in 'production', 'preview') {
+    foreach ($target in 'production') {
         & vercel env rm $name $target -y @scopeArgs 2>$null | Out-Null
         $value | & vercel env add $name $target @scopeArgs 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) { throw "Nao consegui gravar $name ($target) na Vercel." }
@@ -61,7 +61,9 @@ try {
     Add-Env 'JWT_SECRET' ([Convert]::ToBase64String($bytes))
 
     Write-Step 'Publicando (build do site + API, leva 1-2 minutos)...'
-    $url = (& vercel deploy --prod --yes @scopeArgs 2>$null | Select-Object -Last 1).Trim()
+    # O CLI novo da Vercel nao termina a saida com o endereco; pega a primeira URL https://...vercel.app.
+    $out = (& vercel deploy --prod --yes @scopeArgs 2>&1 | Out-String)
+    $url = ([regex]::Match($out, 'https://[a-z0-9.-]+\.vercel\.app')).Value
     if ($url -notmatch '^https://') { throw 'O deploy falhou. Rode "vercel deploy --prod" para ver o erro.' }
 
     # Endereco fixo do projeto (ex.: https://lureedu-xyz.vercel.app), usado no link de "esqueci a senha" e no Face ID.
