@@ -29,8 +29,8 @@ if (Test-Path '.vercel\project.json') {
 
 function Add-Env($name, $value) {
     foreach ($target in 'production') {
-        & vercel env rm $name $target -y @scopeArgs 2>$null | Out-Null
-        $value | & vercel env add $name $target @scopeArgs 2>&1 | Out-Null
+        # --value em vez de "$value | vercel env add": pelo pipe do PowerShell 5 o valor chegava errado na Vercel.
+        & vercel env add $name $target --value $value --force --yes @scopeArgs 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) { throw "Nao consegui gravar $name ($target) na Vercel." }
     }
     Write-Host "    $name ok"
