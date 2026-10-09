@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server';
 
 /**
  * Servidor local da API (npm run dev:api). Lê supabase.env como o iniciar.cmd
- * e sobe em http://localhost:8085 (para onde o proxy do Angular aponta).
+ * e sobe em http://localhost:8086 (para onde o proxy do Angular aponta).
  */
 if (existsSync('supabase.env')) {
   for (const line of readFileSync('supabase.env', 'utf8').split(/\r?\n/)) {
@@ -21,5 +21,5 @@ process.on('unhandledRejection', (err) => console.error('Erro sem tratamento (AP
 process.on('uncaughtException', (err) => console.error('Exceção sem tratamento (API continua no ar):', err));
 
 const { createHandler } = await import('./app.js');
-const port = Number(process.env.API_PORT ?? 8085);
+const port = Number(process.env.API_PORT ?? 8086);
 serve({ fetch: createHandler(), port }, () => console.log(`API em http://localhost:${port}`));

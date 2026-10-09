@@ -1,5 +1,5 @@
-# Desliga a API (porta 8085) e o frontend (porta 4200) do AssessoriaLure.
-foreach ($port in 8085, 4200) {
+# Desliga a API (porta 8086) e o frontend (porta 4201) do AssessoriaLure.
+foreach ($port in 8086, 4201) {
     $conns = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
     foreach ($procId in ($conns | Select-Object -ExpandProperty OwningProcess -Unique)) {
         $proc = Get-Process -Id $procId -ErrorAction SilentlyContinue

@@ -11,7 +11,7 @@ Este documento é a fonte da verdade entre backend e frontend. Qualquer mudança
 - Base: `/api`. JSON em **camelCase**. Datas em ISO-8601 UTC (`2026-09-22T12:00:00Z`).
 - IDs: UUID (string) para todas as entidades, exceto **seções**, cujo `id` é um slug (`intro`, `social`, …).
 - Autenticação: `Authorization: Bearer <accessToken>` em todas as rotas, exceto as marcadas como **público**.
-- Arquivos enviados são servidos publicamente em `/files/**` (ex.: `/files/avatars/9f2c….webp`). As URLs vêm **relativas** nas respostas (`/files/...`). Em dev o Angular faz proxy de `/api` e `/files` para `http://localhost:8085` (porta padrão do backend — a 8080 costuma estar ocupada por outros apps de dev); em produção o nginx faz o mesmo.
+- Arquivos enviados são servidos publicamente em `/files/**` (ex.: `/files/avatars/9f2c….webp`). As URLs vêm **relativas** nas respostas (`/files/...`). Em dev o Angular faz proxy de `/api` e `/files` para `http://localhost:8086` (porta padrão do backend — a 8080 costuma estar ocupada por outros apps de dev); em produção o nginx faz o mesmo.
 - Erro padrão (qualquer status ≥ 400):
 
 ```json

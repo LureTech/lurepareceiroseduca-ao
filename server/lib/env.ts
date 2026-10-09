@@ -10,7 +10,7 @@ function list(value: string | undefined): string[] {
     .filter(Boolean);
 }
 
-const frontendUrl = (process.env.APP_FRONTEND_URL ?? 'http://localhost:4200').replace(/\/$/, '');
+const frontendUrl = (process.env.APP_FRONTEND_URL ?? 'http://localhost:4201').replace(/\/$/, '');
 
 export const env = {
   frontendUrl,

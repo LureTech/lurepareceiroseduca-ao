@@ -1,5 +1,5 @@
-# Publica o AssessoriaLure (site + API) num projeto da Vercel da conta logada neste computador.
-# Cria o projeto se nao existir, copia DB_URL/DB_USERNAME/DB_PASSWORD do supabase.env para as
+# Publica o LURE Educacao 2 (site + API) num projeto da Vercel da conta logada neste computador.
+# Cria o projeto se nao existir, copia DB_URL/DB_USERNAME/DB_PASSWORD/DB_SCHEMA do supabase.env para as
 # variaveis do projeto (sem mostrar na tela), gera um JWT_SECRET novo e publica em producao.
 #
 # Uso:  powershell -ExecutionPolicy Bypass -File scripts\publicar-vercel.ps1
@@ -7,7 +7,7 @@
 # Sem -Scope usa o time atual da conta logada (vercel whoami / vercel teams ls) — hoje, o Lure Tech.
 param(
     [string]$Scope = '',
-    [string]$Project = 'lureedu'
+    [string]$Project = 'lureedu2'
 )
 
 # 'Continue': o CLI da Vercel escreve o progresso no stderr, e com 'Stop' o PowerShell 5 trata isso
@@ -50,7 +50,9 @@ try {
         $i = $t.IndexOf('=')
         $vars[$t.Substring(0, $i).Trim()] = $t.Substring($i + 1).Trim()
     }
-    foreach ($k in 'DB_URL', 'DB_USERNAME', 'DB_PASSWORD') {
+    # DB_SCHEMA (lure2) separa este site do LURE EDUCACAO original no mesmo banco; nunca publique com 'lure'.
+    if ($vars['DB_SCHEMA'] -eq 'lure') { throw 'DB_SCHEMA=lure e o schema do site original. Use lure2.' }
+    foreach ($k in 'DB_URL', 'DB_USERNAME', 'DB_PASSWORD', 'DB_SCHEMA') {
         if (-not $vars[$k]) { throw "supabase.env sem $k." }
         Add-Env $k $vars[$k]
     }

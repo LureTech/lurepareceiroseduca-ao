@@ -6,13 +6,13 @@ O contrato com o backend (Spring Boot) está em [`../docs/API.md`](../docs/API.m
 ## Requisitos
 
 - **Node.js ≥ 24.15** (ou 22.22.3+) — exigência do Angular CLI 22. Com Node 24.11 o CLI recusa rodar.
-- Backend rodando em `http://localhost:8085` para desenvolvimento.
+- Backend rodando em `http://localhost:8086` para desenvolvimento.
 
 ## Comandos
 
 ```bash
 npm install          # dependências
-npm start            # ng serve em http://localhost:4200 (com proxy para o backend)
+npm start            # ng serve em http://localhost:4201 (com proxy para o backend)
 npx ng build         # build de produção em dist/frontend/browser
 ```
 
@@ -22,8 +22,8 @@ npx ng build         # build de produção em dist/frontend/browser
 
 | Caminho   | Destino                 |
 |-----------|-------------------------|
-| `/api/**` | `http://localhost:8085` |
-| `/files/**` | `http://localhost:8085` |
+| `/api/**` | `http://localhost:8086` |
+| `/files/**` | `http://localhost:8086` |
 
 As chamadas usam URLs relativas (`/api/...`), então em produção basta o nginx fazer o mesmo roteamento
 e servir `dist/frontend/browser` com fallback para `index.html` (SPA).

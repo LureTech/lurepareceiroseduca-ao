@@ -1,8 +1,9 @@
-// Proxy do "ng serve": /api e /files vão para a API publicada na Vercel (em São Paulo, ao lado do
-// banco), que responde rápido mesmo quando a internet até o Supabase oscila.
-// Para testar mudanças no servidor (server/), suba a API local e use: LURE_API=local
-const local = process.env.LURE_API === 'local';
-const target = local ? 'http://localhost:8085' : process.env.LURE_API || 'https://lureedu-seven.vercel.app';
+// Proxy do "ng serve": /api e /files vão para a API local (http://localhost:8086), que usa o schema
+// "lure2" do banco. Nunca aponta por padrão para a API do LURE EDUCAÇÃO original.
+// Depois de publicar este site na Vercel, dá para usar a API publicada: LURE_API=https://<site>.vercel.app
+const remote = process.env.LURE_API && process.env.LURE_API !== 'local' ? process.env.LURE_API : null;
+const target = remote ?? 'http://localhost:8086';
+const local = !remote;
 
 export default {
   '/api': { target, secure: !local, changeOrigin: !local, logLevel: 'warn' },
